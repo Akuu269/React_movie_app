@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { getMovies } from './temp/MoviesService'
+import Pagination from './Pagination'
+import List from './List'
 export default class MoviesPage extends Component {
     state = {
       
@@ -114,17 +116,13 @@ export default class MoviesPage extends Component {
 
             })
         }
-        // paginate
+         // paginate
         // no of pages
         let numberofPage = Math.ceil(filteredArr.length / limit);
-        let pageNumberArr = []
-        for (let i = 0; i < numberofPage; i++) {
-            pageNumberArr.push(i + 1);
-        }
-        // impliment
+
+         // impliment
         // si >- sartingindx>- (pagenumber - 1) * limit
         // eidx >- endingindx >- si + limit
-        
         let si = (currentPage -1 )*limit;
         let eidx = si + limit;
         filteredArr = filteredArr.slice(si , eidx);
@@ -133,17 +131,10 @@ export default class MoviesPage extends Component {
             <div className = "row" >     {/* page devided into 12 vertical row 
                 {/* col-3 means 12 out of 3 part and col-9 means 9 out of 12 part */}
                  <div className="col-3">
-                 <ul class="list-group">
-                     {
-                        this.state.genres.map((cgObj) => (
-                             <li class="list-group-item" key = {cgObj.id} 
-                             onClick = {() => {this.groupByGenres(cgObj.name)}}>
-                                 {cgObj.name}</li>
-
-                        )) 
-                     }
-                
-                 </ul>
+                     <List
+                     genres ={genres}
+                     groupByGenres = {this.groupByGenres}
+                     ></List>
                  </div>
                  <div className="col-9">
                       {/* In bootstrap , seach the table >- and copy the code of table class */}
@@ -190,26 +181,16 @@ export default class MoviesPage extends Component {
               </tbody>
 
                 </table>
-                <nav aria-label="..." className="col-2" >
-                        <ul className="pagination ">
-                            {
-                                pageNumberArr.map((pageNumber) => {
-                                    let additional = pageNumber == currentPage ? "page-item active" : "page-item";
-                                    return (
-                                        <li className="page-item" aria-current="page">
-                                        <li className={additional}
-                                            aria-current="page" onClick={() => { this.changeCurrentPage(pageNumber) }}>
-                                            <span className="page-link">{pageNumber}</span>
-                                        </li>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                    </nav>
+                <Pagination
+                numberofPage = {numberofPage} 
+                currentPage ={currentPage} 
+                changeCurrentPage = {this.changeCurrentPage}
+                ></Pagination>               
                  </div>
             </div>
 
         )
     }
     }
+      
+
