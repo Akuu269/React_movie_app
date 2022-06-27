@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { getMovies } from './temp/MoviesService'
 import Pagination from './Pagination'
 import List from './List'
+import {Link} from 'react-router-dom'
 export default class MoviesPage extends Component {
     state = {
       
@@ -137,6 +138,9 @@ export default class MoviesPage extends Component {
                      ></List>
                  </div>
                  <div className="col-9">
+                     <button className = "btn btn-primary">
+                         <Link to = "/new" className = "text-light">New</Link>
+                     </button>
                       {/* In bootstrap , seach the table >- and copy the code of table class */}
             
             <input type = "search" value = {currSearchText} onChange = {this.setCurrentText}></input>
